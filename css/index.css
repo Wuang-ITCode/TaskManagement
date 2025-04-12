@@ -1,0 +1,70 @@
+body {
+    background: url('../images/task.webp');
+    background-size: cover;
+    background-position-y: -35px;
+    text-align: center;
+    
+}
+
+.container {
+    width: 400px;
+    margin: 50px auto;
+    background: rgb(129, 169, 136);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.task-input {
+    display: flex;
+    gap: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 8px;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* .add {
+    background: #28a745;
+    color: white;
+}
+
+.edit {
+    background: #ffc107;
+}
+
+.delete {
+    background: #dc3545;
+    color: white;
+} */
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #f8f8fb;
+    margin: 5px 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+li input {
+    width: 60%;
+    padding: 5px;
+}
+

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/home.css" />
+    <title>Quản lý công việc</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <!-- Thêm FullCalendar -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Trang chủ</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <!-- Dropdown Danh Mục -->
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownDanhMuc" role="button"
+                            data-bs-toggle="dropdown">
+                            Nhóm người dùng
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Vai trò</a></li>
+                            <li><a class="dropdown-item" href="#">Thành viên</a></li>
+                        </ul>
+                    </li> -->
+                    <li class="nav-item"><a class="nav-link" href="./user-group.html">Nhóm người dùng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./job.html">Công việc</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="./type-of-work.html">Loại công việc</a></li> -->
+                    <li class="nav-item"><a class="nav-link" href="./project.html">Dự án</a></li>
+                </ul>
+                <!-- <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search" />
+                    <button class="btn btn-success" type="submit">Tìm</button>
+                </form> -->
+                <!-- 🟢 Hiển thị tên người dùng -->
+                <span class="nav-link text-white ms-3" id="usernameDisplay"></span>
+                <a class="nav-link text-white ms-3" href="./login.html">Đăng xuất</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <section class="calendar">
+            <h2>March 2021</h2>
+            <div class="calendar-grid" id="calendar"></div>
+        </section>
+    </main>
+
+    <!-- Discount banner --> 
+     <!-- <div class="bg-warning text-center py-1">
+        <p>Hãy quản lý công việc một cách hợp lý!</p>
+    </div>  -->
+
+    <!-- Product List
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Danh sách sản phẩm</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Product Image">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Sản phẩm 3</h5>
+                        <p class="card-text">Mô tả sản phẩm 3</p>
+                        <button class="btn btn-primary">Mua ngay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Thêm FullCalendar JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/locales-all.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src = "../js/home.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

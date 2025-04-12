@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Giai Đoạn</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .btn-edit, .btn-delete {
+            padding: 0.25rem 0.5rem;
+            margin: 0 0.25rem;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 5px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a href="../web/home.html">🏠 Trang chủ</a> /
+            <a href="../web/project.html">Dự án</a> /
+            <a href="#">Giai đoạn</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>📌 Quản lý Giai Đoạn</h1>
+            <button id="createPhase" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Tạo/Thêm giai đoạn
+            </button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Tên Giai Đoạn</th>
+                        <th>Thời gian bắt đầu</th>
+                        <th>Thời gian kết thúc</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody id="phaseList">
+                    <!-- Dữ liệu giai đoạn sẽ được thêm vào đây bằng JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal Thêm Giai Đoạn -->
+    <div id="phaseModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Thêm Giai Đoạn</h2>
+            <form id="addPhaseForm">
+                <div class="mb-3">
+                    <label for="phaseName" class="form-label">Tên giai đoạn</label>
+                    <input type="text" class="form-control" id="phaseName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phaseStart" class="form-label">Ngày bắt đầu</label>
+                    <input type="datetime-local" class="form-control" id="phaseStart" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phaseEnd" class="form-label">Ngày kết thúc</label>
+                    <input type="datetime-local" class="form-control" id="phaseEnd" required>
+                </div>
+                <div class="mb-3">
+                    <label for="phaseStatus" class="form-label">Trạng thái</label>
+                    <select class="form-select" id="phaseStatus" required>
+                        <option value="pending">Chưa bắt đầu</option>
+                        <option value="in_progress">Đang thực hiện</option>
+                        <option value="completed">Hoàn thành</option>
+                    </select>
+                </div>
+            </form>
+            <div class="text-end">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('phaseModal').style.display='none'">Đóng</button>
+                <button type="button" class="btn btn-primary" id="savePhase">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Sửa Giai Đoạn -->
+    <div id="editPhaseModal" class="modal">
+        <div class="modal-content">
+            <span class="close edit-close">&times;</span>
+            <h2>Sửa Giai Đoạn</h2>
+            <form id="editPhaseForm">
+                <div class="mb-3">
+                    <label for="editPhaseName" class="form-label">Tên giai đoạn</label>
+                    <input type="text" class="form-control" id="editPhaseName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="editPhaseStart" class="form-label">Ngày bắt đầu</label>
+                    <input type="datetime-local" class="form-control" id="editPhaseStart" required>
+                </div>
+                <div class="mb-3">
+                    <label for="editPhaseEnd" class="form-label">Ngày kết thúc</label>
+                    <input type="datetime-local" class="form-control" id="editPhaseEnd" required>
+                </div>
+                <div class="mb-3">
+                    <label for="editPhaseStatus" class="form-label">Trạng thái</label>
+                    <select class="form-select" id="editPhaseStatus" required>
+                        <option value="pending">Chưa bắt đầu</option>
+                        <option value="in_progress">Đang thực hiện</option>
+                        <option value="completed">Hoàn thành</option>
+                    </select>
+                </div>
+            </form>
+            <div class="text-end">
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('editPhaseModal').style.display='none'">Đóng</button>
+                <button type="button" class="btn btn-primary" id="updatePhase">Cập nhật</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/stage.js"></script>
+</body>
+
+</html>
