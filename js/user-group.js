@@ -258,6 +258,9 @@ async function searchMember() {
 
 // Khởi tạo khi load trang
 document.addEventListener('DOMContentLoaded', async () => {
+    if (! checkLogin()) {
+        return;
+    }
     await renderTable();
 
     const form = document.getElementById('memberForm');
@@ -270,3 +273,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         searchBox.addEventListener('input', searchMember);
     }
 });
+
+function checkLogin() {
+    const check = localStorage.getItem('user');
+    if (check == null) {
+        window.location.href = "http://localhost:3000/login.html";
+
+        return false;
+    }
+    return true;
+}

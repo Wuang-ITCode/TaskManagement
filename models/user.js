@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const AutoInscrement = require('mongoose-sequence')(mongoose);
 
 // Xóa model cũ nếu tồn tại
 if (mongoose.models.User) {
@@ -6,6 +7,7 @@ if (mongoose.models.User) {
 }
 
 const userSchema = new mongoose.Schema({
+  _id: Number,
   fullName: { 
     type: String, 
     required: [true, 'Họ và tên là bắt buộc'],
@@ -42,4 +44,5 @@ const userSchema = new mongoose.Schema({
   timestamps: true // Tự động thêm createdAt và updatedAt
 });
 
+userSchema.plugin(AutoInscrement, { id: 'user_counter', inc_field: '_id' });
 module.exports = mongoose.model('User', userSchema);

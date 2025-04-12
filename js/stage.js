@@ -234,6 +234,9 @@ async function deletePhase(id) {
 
 // Khởi tạo khi trang được tải
 document.addEventListener("DOMContentLoaded", function () {
+    if (! checkLogin()) {
+        return;
+    }
     const createPhaseBtn = document.getElementById("createPhase");
     const modal = document.getElementById("phaseModal");
     const closeModal = document.querySelector(".close");
@@ -265,3 +268,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // Hiển thị danh sách giai đoạn khi tải trang
     updatePhaseList();
 });
+
+function checkLogin() {
+    const check = localStorage.getItem('user');
+    if (check == null) {
+        window.location.href = "http://localhost:3000/login.html";
+
+        return false;
+    }
+    return true;
+}

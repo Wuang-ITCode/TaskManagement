@@ -254,8 +254,22 @@ async function deleteProject(id) {
 
 // Lắng nghe sự kiện khi DOM tải xong
 document.addEventListener('DOMContentLoaded', async () => {
+    if (! checkLogin()) {
+        return;
+    }
     await displayProjects();
     
     document.getElementById('addProjectForm').addEventListener('submit', addProject);
     document.getElementById('editProjectForm').addEventListener('submit', updateProject);
 });
+
+
+function checkLogin() {
+    const check = localStorage.getItem('user');
+    if (check == null) {
+        window.location.href = "http://localhost:3000/login.html";
+
+        return false;
+    }
+    return true;
+}

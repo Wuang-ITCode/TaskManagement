@@ -17,7 +17,6 @@ async function callApi(endpoint = '', method = 'GET', data = null) {
         if (data) {
             options.body = JSON.stringify(data);
         }
-        console.log(options);
 
         const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
         
@@ -69,7 +68,9 @@ function hideLoading() {
 // Lấy danh sách công việc từ API
 async function getTasks() {
     try {
-        return await callApi();
+        const user = JSON.parse(localStorage.getItem('user'));
+        let query = '?user=' + user.id;
+        return await callApi(query);
     } catch (error) {
         console.error('Error fetching tasks:', error);
         return [];
@@ -85,10 +86,10 @@ async function addTask(event) {
         form.reportValidity();
         return;
     }
-
+    const user = JSON.parse(localStorage.getItem('user'));
     const taskData = {
         title: document.getElementById('taskName').value,
-        userID: '67f78ad4565b73fc44c34b0b',
+        userID: user.id,
         description: document.getElementById('taskDescription').value,
         members: parseInt(document.getElementById('workerCount').value),
         startDate: document.getElementById('startDate').value,
@@ -210,7 +211,20 @@ async function updateTask(event) {
 
 // Lắng nghe sự kiện khi DOM tải xong
 document.addEventListener('DOMContentLoaded', async () => {
+    if (! checkLogin()) {
+        return;
+    }
     await updateTaskList();
     document.getElementById('addTaskForm').addEventListener('submit', addTask);
     document.getElementById('editTaskForm').addEventListener('submit', updateTask);
 });
+
+function checkLogin() {
+    const check = localStorage.getItem('user');
+    if (check == null) {
+        window.location.href = "http://localhost:3000/login.html";
+
+        return false;
+    }
+    return true;
+}

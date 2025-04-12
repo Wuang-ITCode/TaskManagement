@@ -2,7 +2,8 @@ const Task = require('../models/taskModels');
 
 exports.getAllTasks = async (req, res) => {
     try {
-        const tasks = await Task.find();
+        const user_id = req.query.user;
+        const tasks = await Task.find({ userID: user_id });
         res.json(tasks);
     } catch (error) {
         console.error('Error getting tasks:', error);
