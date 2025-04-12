@@ -17,8 +17,8 @@ const memberSchema = new mongoose.Schema({
     role: {
         type: String,
         required: [true, 'Vai trò là bắt buộc'],
-        enum: ['Admin', 'Member', 'Leader'],
-        default: 'Member'
+        enum: ['Quản trị viên', 'Thành viên'],
+        default: 'Thành viên'
     }
 }, {
     timestamps: true

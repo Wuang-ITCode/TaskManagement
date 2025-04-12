@@ -136,7 +136,7 @@ async function stageProject(id) {
         }
 
         localStorage.setItem("selectedProject", JSON.stringify(project));
-    window.location.href = "../web/stage.html";
+        window.location.href = "http://localhost:3000/stage.html?project_id=" + id;
     } catch (error) {
         console.error('Error loading project:', error);
     }
@@ -260,6 +260,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     await displayProjects();
     
     document.getElementById('addProjectForm').addEventListener('submit', addProject);
+    const addProjectModal = document.getElementById('addProjectModal');
+    addProjectModal.style.zIndex = '1055';
     document.getElementById('editProjectForm').addEventListener('submit', updateProject);
 });
 

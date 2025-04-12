@@ -11,6 +11,18 @@ exports.getAllProjects = async (req, res) => {
   }
 };
 
+exports.getProjectById = async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) {
+        return res.status(404).json({ message: 'Không tìm thấy công việc' });
+    }
+    res.json(project);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Tạo mới dự án
 exports.createProject = async (req, res) => {
   try {

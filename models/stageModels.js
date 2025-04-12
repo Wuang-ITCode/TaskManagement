@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
+const AutoInscrement = require('mongoose-sequence')(mongoose);
 
 const stageSchema = new mongoose.Schema({
+  _id: Number,
   name: { type: String, required: true },
-  startTime: { type: Date, required: true },
-  endTime: { type: Date, required: true },
-  status: { type: String, enum: ['Chưa bắt đầu', 'Đang thực hiện', 'Đã hoàn thành'], default: 'Chưa bắt đầu' }
+  projectID: Number,
+  startDate: { type: Date, required: true },
+  endDate: { type: Date, required: true },
+  status: { type: String, default: 'Chưa bắt đầu' }
 });
 
+stageSchema.plugin(AutoInscrement, { id: 'stage_counter', inc_field: '_id' });
 module.exports = mongoose.model('Stage', stageSchema);

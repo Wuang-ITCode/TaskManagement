@@ -1,5 +1,5 @@
 // API base URL
-const API_BASE_URL = 'http://localhost:3000/api/phases';
+const API_BASE_URL = 'http://localhost:3000/api/stages';
 
 // Hàm gọi API với xử lý lỗi tốt hơn
 async function callApi(endpoint, method = 'GET', data = null) {
@@ -63,7 +63,10 @@ function hideLoading() {
 async function getPhases() {
     try {
         showLoading();
-        const data = await callApi('/');
+        let urlParams = new URLSearchParams(window.location.search);
+        let projectId = urlParams.get('project_id');
+        let query = '?project_id=' + projectId;
+        const data = await callApi(query);
         return data;
     } catch (error) {
         console.error("Lỗi khi lấy dữ liệu từ API:", error);
@@ -95,8 +98,8 @@ async function updatePhaseList() {
                 <td>${formatDate(phase.endDate)}</td>
                 <td>${phase.status}</td>
                 <td>
-                    <button class="btn-edit" onclick="editPhase(${phase.id})">✏️ Sửa</button>
-                    <button class="btn-delete" onclick="deletePhase(${phase.id})">❌ Xóa</button>
+                    <button class="btn-edit" onclick="editPhase(${phase._id})">✏️ Sửa</button>
+                    <button class="btn-delete" onclick="deletePhase(${phase._id})">❌ Xóa</button>
                 </td>
             `;
             phaseList.appendChild(row);
@@ -136,11 +139,15 @@ async function addPhase() {
         return;
     }
 
+    let urlParams = new URLSearchParams(window.location.search);
+    let projectID = urlParams.get('project_id');
+    
     const newPhase = {
-        name,
-        startDate,
-        endDate,
-        status
+        name: name,
+        projectID: projectID,
+        startDate: startDate,
+        endDate: endDate,
+        status: status
     };
 
     try {
