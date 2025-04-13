@@ -6,80 +6,68 @@ body {
     background-color: #f8f9fc;
 }
 
-/* 🌍 Thanh điều hướng */
-nav {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.navbar {
+    background-color: #f9fafb;
+    padding: 12px 24px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
+    gap: 16px;
+    /* Tăng khoảng cách giữa các phần tử */
+    font-size: 15px;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 20px;
+    overflow-x: auto;
 }
 
-nav a {
+.navbar a {
+    color: #2563eb;
     text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    /* Khoảng cách giữa icon và text */
+    transition: color 0.2s ease-in-out;
 }
 
-nav span {
-    color: #555;
-    font-weight: 600;
+.navbar a:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
 }
 
-/* 🎨 Nút bấm */
-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    margin: 10px 5px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    transition: background 0.3s ease;
+.navbar i {
+    color: #ef4444;
 }
 
-button:hover {
-    background-color: #0056b3;
+.navbar span.separator {
+    color: #9ca3af;
+    font-size: 14px;
 }
 
-/* Căn giữa bảng và làm rộng */
-.phase-table {
+/* Loading overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    /* Kéo bảng rộng hết trang */
-    border-collapse: collapse;
-    /* Gộp viền bảng */
-    margin-top: 20px;
-    /* Khoảng cách với nút "Tạo mới" */
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 }
 
-/* Thiết lập khoảng cách giữa các ô trong bảng */
-.phase-table th,
-.phase-table td {
-    padding: 12px 20px;
-    /* Tăng khoảng cách giữa chữ */
-    text-align: center;
-    /* Căn giữa nội dung */
-    border: 1px solid #ddd;
-    /* Đường viền nhẹ */
+/* Nút chỉnh sửa & xoá */
+.btn-edit,
+.btn-delete {
+    padding: 0.25rem 0.5rem;
+    margin: 0 0.25rem;
 }
 
-/* Định dạng tiêu đề bảng */
-.phase-table th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-    letter-spacing: 1px;
-    /* Tạo khoảng cách giữa các chữ */
-}
-
-/* Hiệu ứng khi di chuột vào hàng */
-.phase-table tr:hover {
-    background-color: #f9f9f9;
-}
-
-/* Modal */
+/* Modal tổng */
 .modal {
     display: none;
     position: fixed;
@@ -88,36 +76,57 @@ button:hover {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
+/* Khung nội dung modal (đã được thu nhỏ và làm đẹp) */
 .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 400px;
-    text-align: center;
-}
-
-.modal-content input,
-.modal-content select {
+    background-color: #ffffff;
+    margin: 10% auto;
+    padding: 30px 25px;
+    border: 1px solid #ddd;
     width: 100%;
-    margin-bottom: 10px;
-    padding: 8px;
+    max-width: 420px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
 }
 
-.btn-primary {
-    background-color: blue;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-}
-
+/* Nút đóng modal */
 .close {
+    color: #aaa;
     float: right;
-    font-size: 24px;
+    font-size: 28px;
+    font-weight: bold;
     cursor: pointer;
+}
+
+.close:hover {
+    color: black;
+}
+
+/* Hiệu ứng mở modal */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Nút "Lưu", "Đóng" */
+button {
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+    color: white;
 }

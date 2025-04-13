@@ -20,6 +20,18 @@
             align-items: center;
             z-index: 9999;
         }
+        .navbar a,
+        .breadcrumb a {
+          text-decoration: none !important; /* ❌ Bỏ gạch chân */
+          color: #2563eb;
+          font-weight: 500;
+        }
+
+        .navbar a:hover,
+        .breadcrumb a:hover {
+          text-decoration: underline; /* Nếu bạn vẫn muốn underline khi hover, giữ dòng này */
+          color: #1d4ed8;
+        }
     </style>
 </head>
 
