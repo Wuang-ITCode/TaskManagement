@@ -1,7 +1,8 @@
 const API_BASE_URL = 'http://localhost:3000/api/members';
+const API_PROJECT_URL = 'http://localhost:3000/api/projects';
 
 // Gọi API có xử lý lỗi
-async function callApi(endpoint = '', method = 'GET', data = null) {
+async function callApi(endpoint = '', method = 'GET', data = null, api = API_BASE_URL) {
     try {
         showLoading();
         const options = {
@@ -15,7 +16,7 @@ async function callApi(endpoint = '', method = 'GET', data = null) {
             options.body = JSON.stringify(data);
         }
 
-        const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
+        const response = await fetch(`${api}${endpoint}`, options);
 
         const contentType = response.headers.get("content-type");
         if (!contentType || !contentType.includes("application/json")) {
@@ -77,6 +78,42 @@ async function getMembers() {
     }
 }
 
+// Lấy danh sách dự án từ API
+async function getProjects() {
+    try {
+        const user = JSON.parse(localStorage.getItem('user'));
+        let query = '?user=' + user.id;
+        const res = await callApi(query, 'GET', null, API_PROJECT_URL);
+
+        const selectElement = document.getElementById('memberProject');
+
+        // Xóa các option cũ (nếu có)
+        selectElement.innerHTML = '';
+
+        // Thêm option mặc định
+        const defaultOption = document.createElement('option');
+        defaultOption.text = '-- Chọn dự án --';
+        defaultOption.value = '';
+        selectElement.appendChild(defaultOption);
+
+        // Thêm từng project vào select
+        res.forEach(project => {
+            const option = document.createElement('option');
+            option.value = project._id;// giá trị gửi lên khi form submit
+            option.text = project.name;// tên hiển thị
+            selectElement.appendChild(option);
+        });
+
+        selectElement.addEventListener('change', function () {
+            console.log(selectElement.value);
+        });
+
+    } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu từ API:", error);
+        return [];
+    }
+}
+
 // Hiển thị bảng thành viên
 async function renderTable() {
     const tableBody = document.getElementById("memberTableBody");
@@ -128,6 +165,7 @@ async function addOrUpdateMember(event) {
 
     const nameInput = document.getElementById("memberName");
     const emailInput = document.getElementById("memberEmail");
+    const projectInput = document.getElementById("memberProject").value;
     const roleInput = document.getElementById("memberRole");
     const editIdInput = document.getElementById("editId");
 
@@ -139,6 +177,7 @@ async function addOrUpdateMember(event) {
     const memberData = {
         name: nameInput.value.trim(),
         email: emailInput.value.trim(),
+        projectID: projectInput,
         role: roleInput.value
     };
 
@@ -272,6 +311,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (searchBox) {
         searchBox.addEventListener('input', searchMember);
     }
+    getProjects();
 });
 
 function checkLogin() {

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-
+const AutoInscrement = require('mongoose-sequence')(mongoose);
 const memberSchema = new mongoose.Schema({
+    _id: Number,
     name: {
         type: String,
         required: [true, 'Tên thành viên là bắt buộc'],
@@ -23,7 +24,7 @@ const memberSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
-
+memberSchema.plugin(AutoInscrement, { id: 'member_counter', inc_field: '_id' });
 const Member = mongoose.model('Member', memberSchema);
 
 module.exports = Member; 

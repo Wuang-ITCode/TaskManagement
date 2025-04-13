@@ -1,5 +1,5 @@
 // controllers/userController.js
-const user = require('../models/userModels');
+const user = require('../models/user');
 
 // Lấy tất cả người dùng
 exports.getAllUsers = async (req, res) => {

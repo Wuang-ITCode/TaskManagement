@@ -66,7 +66,12 @@ function hideLoading() {
 // Lấy danh sách dự án từ API
 async function getProjects() {
     try {
-        return await callApi();
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        let query = '?user=' + user.id;
+        return await callApi(query);
+
+        // return await callApi();
     } catch (error) {
         console.error("Lỗi khi lấy dữ liệu từ API:", error);
         return [];
@@ -86,12 +91,13 @@ async function displayProjects() {
             return;
         }
 
-    projects.forEach((project, index) => {
+        projects.forEach((project, index) => {
+
             const row = document.createElement('tr');
             row.innerHTML = `
             <td>${index + 1}</td>
             <td>${project.name}</td>
-            <td>${project.desc}</td>
+            <td>${project.description}</td>
             <td>${project.type}</td>
                 <td>${formatDate(project.startDate)}</td>
                 <td>${formatDate(project.endDate)}</td>
@@ -151,10 +157,12 @@ async function addProject(event) {
         form.reportValidity();
         return;
     }
-
+    
+    const user = JSON.parse(localStorage.getItem('user'));
     const projectData = {
         name: document.getElementById("projectName").value.trim(),
-        desc: document.getElementById("projectDesc").value.trim(),
+        description: document.getElementById("projectDesc").value.trim(),
+        userID: user.id,
         type: document.getElementById("projectType").value.trim(),
         startDate: document.getElementById("projectstartDate").value,
         endDate: document.getElementById("projectendDate").value,
@@ -192,7 +200,7 @@ async function editProject(id) {
 
         document.getElementById("editProjectId").value = project._id;
     document.getElementById("editProjectName").value = project.name;
-    document.getElementById("editProjectDesc").value = project.desc;
+    document.getElementById("editProjectDesc").value = project.description;
     document.getElementById("editProjectType").value = project.type;
         document.getElementById("editProjectStartDate").value = project.startDate.split('T')[0];
         document.getElementById("editProjectEndDate").value = project.endDate.split('T')[0];
@@ -216,7 +224,7 @@ async function updateProject(event) {
     const id = document.getElementById("editProjectId").value;
     const projectData = {
         name: document.getElementById("editProjectName").value.trim(),
-        desc: document.getElementById("editProjectDesc").value.trim(),
+        description: document.getElementById("editProjectDesc").value.trim(),
         type: document.getElementById("editProjectType").value.trim(),
         startDate: document.getElementById("editProjectStartDate").value,
         endDate: document.getElementById("editProjectEndDate").value,
@@ -262,6 +270,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('addProjectForm').addEventListener('submit', addProject);
     const addProjectModal = document.getElementById('addProjectModal');
     addProjectModal.style.zIndex = '1055';
+    const editProjectModal = document.getElementById('editProjectModal');
+    editProjectModal.style.zIndex = '1055';
     document.getElementById('editProjectForm').addEventListener('submit', updateProject);
 });
 

@@ -5,6 +5,10 @@ exports.getAllStages = async (req, res) => {
   try {
     const project_id = req.query.project_id;
     const stages = await Stage.find({ projectID: project_id });
+
+    // const user_id = req.query.user;
+    // const tasks = await Task.find({ userID: user_id });
+
     res.json(stages);
   } catch (err) {
     res.status(500).json({ error: err.message });

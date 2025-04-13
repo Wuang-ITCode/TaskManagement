@@ -1,4 +1,5 @@
 const Member = require('../models/memberModel');
+const MemberProject = require('../models/MemberProjectModel');
 
 // Lấy tất cả thành viên
 exports.getAllMembers = async (req, res) => {
@@ -28,6 +29,9 @@ exports.createMember = async (req, res) => {
     try {
         const member = new Member(req.body);
         const newMember = await member.save();
+        const memberProject = new MemberProject({ memberID: newMember._id, projectID: req.body.projectID })
+        await memberProject.save();
+        
         res.status(201).json(newMember);
     } catch (error) {
         res.status(400).json({ message: error.message });
