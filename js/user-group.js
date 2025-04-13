@@ -207,13 +207,14 @@ async function editMember(id) {
             return;
         }
 
-        const member = await callApi(`/${id}`);
-        if (!member || !member._id) {
+        const res = await callApi(`/${id}`);
+        if (!res || !res.member._id) {
             showError('Không tìm thấy thông tin thành viên');
             return;
         }
 
         const nameInput = document.getElementById("memberName");
+        const projectInput = document.getElementById("memberProject");
         const emailInput = document.getElementById("memberEmail");
         const roleInput = document.getElementById("memberRole");
         const editIdInput = document.getElementById("editId");
@@ -223,10 +224,11 @@ async function editMember(id) {
             return;
         }
 
-        nameInput.value = member.name;
-        emailInput.value = member.email;
-        roleInput.value = member.role;
-        editIdInput.value = member._id;
+        nameInput.value = res.member.name;
+        emailInput.value = res.member.email;
+        projectInput.value = res.projectID;
+        roleInput.value = res.member.role;
+        editIdInput.value = res.member._id;
 
         $('#addMemberModal').modal('show');
     } catch (error) {
@@ -312,6 +314,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         searchBox.addEventListener('input', searchMember);
     }
     getProjects();
+
+    const btnAdd = document.getElementById('btn-add-member');
+    btnAdd.addEventListener('click',() => {
+        let editId = document.getElementById("editId");
+        editId.value = null;
+        form.reset();
+    })
 });
 
 function checkLogin() {

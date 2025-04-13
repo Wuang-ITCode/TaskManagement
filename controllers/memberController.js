@@ -14,11 +14,20 @@ exports.getAllMembers = async (req, res) => {
 // Lấy thành viên theo ID
 exports.getMemberById = async (req, res) => {
     try {
-        const member = await Member.findById(req.params.id);
+        let member = await Member.findById(req.params.id);
+        let memberIds = await MemberProject.find({ memberID: req.params.id });
+        let projectID = 0;
+        if (memberIds.length > 0) {
+            projectID = memberIds[0].projectID;
+        }
         if (!member) {
             return res.status(404).json({ message: 'Không tìm thấy thành viên' });
         }
-        res.json(member);
+        
+        res.json({
+            member,
+            projectID
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

@@ -9,18 +9,20 @@ exports.getAllProjects = async (req, res) => {
   try {    
     const user_id = Number(req.query.user);
     const projects = await Project.find({ userID: user_id });
-    const user = await User.find({ _id: user_id });
-    const findMember = await Member.find({ email: user[0].email });
-    const projectIdsFromMembership = await MemberProject.find({ memberID: findMember[0]._id });
-    const projectIds = projectIdsFromMembership.map(mp => mp.projectID);
-    const projectMores = await Project.find({ _id: { $in: projectIds } });
-
-
     const allProjectsMap = new Map();
     // Thêm các project do user tạo
     projects.forEach(p => allProjectsMap.set(p._id.toString(), p));
-    // Thêm các project từ membership
-    projectMores.forEach(p => allProjectsMap.set(p._id.toString(), p));
+
+    const user = await User.find({ _id: user_id });
+    const findMember = await Member.find({ email: user[0].email });
+    if (findMember.length > 0) {
+      const projectIdsFromMembership = await MemberProject.find({ memberID: findMember[0]._id });
+      const projectIds = projectIdsFromMembership.map(mp => mp.projectID);
+      const projectMores = await Project.find({ _id: { $in: projectIds } });
+      // Thêm các project từ membership
+      projectMores.forEach(p => allProjectsMap.set(p._id.toString(), p));
+    }
+  
     // Chuyển map thành mảng
     const allProjects = Array.from(allProjectsMap.values());
 
