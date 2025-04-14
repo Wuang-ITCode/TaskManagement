@@ -3,17 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
     // 🟢 Hiển thị tên người dùng
-    const usernameDisplay = document.getElementById("usernameDisplay");
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    // Lấy thông tin người dùng từ localStorage
-    const currentUser = JSON.parse(localStorage.getItem("userLogin"));
-
-    if (currentUser && currentUser.Email) {
-        usernameDisplay.textContent = `Xin chào, ${currentUser.Email}`;
-    } else {
-        usernameDisplay.textContent = "";
-    }
+        const logoutBtn = document.getElementById("logoutBtn");
 
     // 🟢 Xử lý đăng xuất
     if (logoutBtn) {

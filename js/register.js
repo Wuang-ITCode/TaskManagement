@@ -5,7 +5,6 @@ const API_BASE_URL = '/api/auth';
 // Lấy ra element của trang
 const formregister = document.getElementById("formregister");
 const userNameElement = document.getElementById("userName");
-// const PhoneElement = document.getElementById("Phone");
 const EmailElement = document.getElementById("Email");
 const PasswordElement = document.getElementById("Password");
 const rePasswordElement = document.getElementById("rePassword");
